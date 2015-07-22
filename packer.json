@@ -1,0 +1,29 @@
+{
+  "builders": [
+    {
+      "type": "docker",
+      "commit": true,
+      "image": "ubuntu:trusty"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": ".",
+      "destination": "/tmp/rackapp/"
+    },
+    {
+      "type": "shell",
+      "inline": [
+        "cd /tmp/rackapp/ && tar zcvf /tmp/rackapp.tar.gz ."
+      ]
+    }
+  ],
+  "post-processors": [
+    {
+      "type": "atlas",
+      "artifact": "justincampbell/url-shortener-ruby",
+      "artifact_type": "application"
+    }
+  ]
+}
